@@ -131,9 +131,9 @@ var upload = multer({ dest: 'uploads/' })
 接收所有文件。文件信息将以数组的形式，存放在 `req.files`中。  
 **警告：** 确保你会一直处理用户上传的文件。不要将 `multer` 全局引用，防止恶意上传文件，到非期望的路由上。哪个路由需要用到，就在哪个路由上使用。  
 
-### `storage`  
+### **`storage`**  
 
-**`DiskStorage`**
+#### **`DiskStorage`**
 
 
 磁盘存储引擎让你在往磁盘存放文件时，有更多的可配置项。  
@@ -151,3 +151,101 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage })
 ```
 
+有 `destination` 和 `filename` 两个参数配置。都是用来确定文件位置的函数。  
+
+`destination` 用来确定上传的文件，放在哪个文件夹下。可以是一个 `string` 类型（如：`'/tmp/uploads'`）。 如果没设置 `destination` ，则使用操作系统临时文件的默认路径。  
+
+**注意：** 当 `destination` 作为一个函数被配置了，那么你就要负责去建立对应的文件夹。文件夹路径，就是函数中传入的路径参数。如： `'/tmp/uploads'`  
+
+`filename` 用来给存放到文件夹中的文件，进行命名。如果没配置 `filename` 那么就被自动赋予一个随机的名字（唯一的）。  
+
+**注意：** Multer 不会给你添加任何的文件扩展名，这需要你自己添加。  
+
+每个函数都传递了，请求的（`req`）和 包含一些文件信息的 （`file`），两个参数，来帮助你完成逻辑。  
+
+注意，`req.body` 可能没有被完全填充。它取决于客户端向服务端传递 字段（`fields`）和 文件 （`files`）的顺序。  
+
+#### **`MemoryStorage `**  
+
+内存存储引擎，将文件以 `Buffer` 对象的形式，存放在内存中。没有任何配置。  
+ 
+``` javascript
+var storage = multer.memoryStorage()
+var upload = multer({ storage: storage })
+```  
+
+当使用 `MemoryStorage` 时，文件信息将包含一个 key 为 `buffer` 的键值对，值为整个文件的信息。  
+
+**警告：** 使用 `MemoryStorage` 时，如果上传非常大的文件，或者高频率的上传，大量的稍微小一点的文件，可能导致你的应用内存溢出。  
+
+### **`limits `**  
+
+一个指定下列可选属性大小限制的对象。Multer 将这个对象直接传递给 `busboy` ， 可以去[busboy's page](https://github.com/mscdex/busboy#busboy-methods)，查看关于这些属性的详细信息。  
+
+下列属性的值，都要是整数：
+
+| 键值 | 描述 | 默认值 |  
+| ---- | ---- | ---- |  
+| `fieldNameSize ` | 字段名(key)最大长度 | 100 bytes(字节) |  
+| `fieldSize ` | 字段值(value)最大长度 | 1MB |  
+| `fields ` | 非文件字段的最大数量 | 不限 |  
+| `fileSize ` | 表单提交中，最大文件的大小(单位：bytes(字节)) | 不限 |  
+| `files ` | 表单提交中，文件字段的最大数量 | 不限 |  
+| `parts ` | 表单提交中，parts 的最大数量(fields + files) | 不限 |  
+| `headerPairs ` | 表单提交中，请求头信息中，键值对解析的最大数量 | 2000 |  
+
+良好的使用 `limits` ，可以有效防止你的站点避免 Dos 攻击。  
+
+### **`fileFilter `**  
+
+设置这个函数，来控制哪些文件要上传，哪些文件要忽略。  
+
+``` javascript
+function fileFilter (req, file, cb) {
+ 
+  // 向 `cb` 中传入布尔值，来指明文件是上传还是忽略
+ 
+  // 传入 `false` 来忽略文件, 如:
+  cb(null, false)
+ 
+  // 传入 `true ` 来忽略文件, 如:
+  cb(null, true)
+ 
+  // 如果出错，你可以传入一个 Error 来处理
+  cb(new Error('I don\'t have a clue!'))
+ 
+}
+```  
+
+## `Error handling`(错误处理)  
+
+如果报错，multer 将会委托给 express。 你可以通过[express](https://expressjs.com/en/guide/error-handling.html)，来显示一个友好的错误页面。  
+
+如果你想要捕获multer的报错，你可以自己实现这个方法。
+
+``` javascript
+var upload = multer().single('avatar')
+ 
+app.post('/profile', function (req, res) {
+  upload(req, res, function (err) {
+    if (err) {
+      // 上传文件出错
+      return
+    }
+ 
+    // 没有出错
+  })
+})
+```  
+
+## Custom storage engine(自定义存储引擎)  
+
+如何实现自己的存储引擎，请参考[Multer Storage Engine](https://github.com/expressjs/multer/blob/master/StorageEngine.md)  
+
+## License 
+
+[MIT](https://github.com/expressjs/multer/blob/HEAD/LICENSE)  
+
+### 关键词  
+
+**form post multipart form-data formdata express middleware**
