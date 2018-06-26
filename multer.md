@@ -51,7 +51,7 @@ app.post('/cool-profile', cpUpload, function (req, res, next) {
 
 在实际开发中，如果你想要处理只有文本的表单数据，你可以使用任何一种 Multer 方法（`.single()`, `.array()`, `.fields()`）。以 `.array()` 为例：
 
-```
+``` javascript
 var express = require('express')
 var app = express()
 var multer  = require('multer')
@@ -96,7 +96,7 @@ Multer 接收一个对象 （`options`） 为参数，其中 `dest` 是该对象
 
 在大多数的web应用中，可能只需要配置 `dest` ，示例如下：  
 
-```
+``` javascript
 var upload = multer({ dest: 'uploads/' })
 ```
 
@@ -138,7 +138,7 @@ var upload = multer({ dest: 'uploads/' })
 
 磁盘存储引擎让你在往磁盘存放文件时，有更多的可配置项。  
 
-```
+``` javascript
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, '/tmp/my-uploads')
