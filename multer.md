@@ -19,7 +19,7 @@ Multer 添加一个 `body` 对象和一个 `file` / `files` 对象到 `request` 
 
 ### 基本用法
 
-```
+``` javascript
 var express = require('express')
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' })
