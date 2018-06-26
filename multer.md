@@ -182,6 +182,14 @@ var upload = multer({ storage: storage })
 
 一个指定下列可选属性大小限制的对象。Multer 将这个对象直接传递给 `busboy` ， 可以去[busboy's page](https://github.com/mscdex/busboy#busboy-methods)，查看关于这些属性的详细信息。  
 
+``` javascript
+var upload = multer({ 
+	limits: {
+		...
+	} 
+})
+``` 
+
 下列属性的值，都要是整数：
 
 | 键值 | 描述 | 默认值 |  
