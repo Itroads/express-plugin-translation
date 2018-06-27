@@ -2,8 +2,8 @@
 想为国内的开源社区，多少做点贡献，  
 如有不妥之处，请不吝赐教。  
 
-* [x] multer  
-* [ ] body-parser  
+* [x] multer (1.3.0)  
+* [ ] body-parser (1.18.3)   
 * [ ] cors  
 * [ ] morgan  
 * [ ] cluster  
