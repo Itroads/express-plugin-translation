@@ -3,13 +3,13 @@
 如有不妥之处，请不吝赐教。  
 
 * [x] multer  
-* [] body-parser  
-* [] cors  
-* [] morgan  
-* [] cluster  
-* [] compression  
-* [] helmet  
-* [] express-session  
-* [] express-http-proxy  
-* [] serve-favicon
-* [] 待续...
+* [ ] body-parser  
+* [ ] cors  
+* [ ] morgan  
+* [ ] cluster  
+* [ ] compression  
+* [ ] helmet  
+* [ ] express-session  
+* [ ] express-http-proxy  
+* [ ] serve-favicon
+* [ ] 待续...
