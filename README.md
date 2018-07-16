@@ -4,7 +4,7 @@
 
 * [x] multer -> v1.3.0 
 * [x] body-parser -> v1.18.3   
-* [ ] cors  
+* [x] cors -> v2.8.4  
 * [ ] morgan  
 * [ ] cluster  
 * [ ] compression  
